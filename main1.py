@@ -1,6 +1,6 @@
-from analizador.caracteristicas import AnalisadorCaracteristicas
-from analizador.questionario import obter_requisitos
-from analizador.motor_decisao import MotorDecisao
+from analisador.caracteristicas import CaracteristicasDataset
+from analisador.questionario import obter_requisitos
+from analisador.motor_decisao import MotorDecisao
 
 from utils.gerador import gerar_aleatorio
 
@@ -25,48 +25,39 @@ def main():
     print("SELETOR ADAPTATIVO DE ALGORITMOS")
     print("=" * 50)
 
+    print("\nGerando conjunto de dados...")
+
     tamanho = int(
         input(
-            "\nInforme o tamanho do dataset: "
+            "Informe o tamanho do dataset: "
         )
     )
 
     dados = gerar_aleatorio(tamanho)
 
-    analisador = AnalisadorCaracteristicas(
-        dados
-    )
+    print("\nAnalisando características...")
 
-    caracteristicas = analisador.analisar()
+    analisador = CaracteristicasDataset()
+
+    caracteristicas = analisador.analisar(dados)
 
     print("\nCaracterísticas encontradas:")
 
-    print(
-        f"Tamanho: "
-        f"{caracteristicas['tamanho']}"
-    )
-
-    print(
-        f"Tipo: "
-        f"{caracteristicas['tipo']}"
-    )
-
+    print(f"Tamanho: {caracteristicas['tamanho']}")
     print(
         f"Grau de ordenação: "
-        f"{caracteristicas['grau_ordenacao']}%"
+        f"{caracteristicas['grau_ordenacao']:.2f}%"
     )
-
     print(
         f"Duplicatas: "
-        f"{caracteristicas['duplicatas']}%"
+        f"{caracteristicas['duplicatas']:.2f}%"
     )
-
     print(
         f"Amplitude: "
         f"{caracteristicas['amplitude']}"
     )
 
-    print("\nQuestionário:")
+    print("\nResponda ao questionário:")
 
     requisitos = obter_requisitos()
 
